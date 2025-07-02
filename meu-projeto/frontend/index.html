@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Extrair Matéria</title>
+</head>
+
+<body>
+    <h1>Extrair Título e Parágrafo</h1>
+    <input type="text" id="urlInput" placeholder="Cole o link da matéria" size="80" />
+    <button onclick="enviar()">Enviar</button>
+    <hr />
+    <h2 id="titulo"></h2>
+    <p id="paragrafo"></p>
+
+    <script>
+        async function enviar() {
+            const url = document.getElementById('urlInput').value;
+            const resposta = await fetch('https://SEU-BACKEND-DEPLOY/render/extrair', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            });
+
+            const data = await resposta.json();
+            document.getElementById('titulo').textContent = data.titulo || 'Erro';
+            document.getElementById('paragrafo').textContent = data.paragrafo || '';
+        }
+    </script>
+</body>
+
+</html>
